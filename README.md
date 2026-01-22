@@ -1,44 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>D-Connect | Internet Rápida</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <style>
-    *{box-sizing:border-box}
-    body{margin:0;font-family:'Segoe UI',sans-serif;background:#0e0e0e;color:#fff}
-    header{text-align:center;padding:30px 10px;background:#111;border-bottom:2px solid #ff6a00}
-    header h1{color:#ff6a00;margin-bottom:5px}
-    header p{font-size:14px;color:#ccc}
-    .container{max-width:1000px;margin:30px auto;padding:20px}
-    h2{color:#ff6a00;text-align:center;margin-top:40px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
-    .card{background:#1a1a1a;border-radius:14px;padding:18px;text-align:center;border:1px solid #2a2a2a;transition:.3s;cursor:pointer}
-    .card:hover{transform:translateY(-6px);box-shadow:0 0 20px rgba(255,106,0,.25)}
-    .card span{display:block;font-size:18px;margin-bottom:6px}
-    .card strong{font-size:20px;color:#25d366}
-    .info{text-align:center;font-size:14px;color:#bbb;margin:15px 0}
-    .payments{max-width:500px;margin:30px auto}
-    .pay{background:#111;border:1px dashed #333;border-radius:10px;padding:14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-    .copy-btn{background:#25d366;border:none;color:#fff;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:bold}
-    .copy-btn:hover{background:#1ebf57}
-    footer{text-align:center;font-size:13px;color:#888;margin:40px 0}
-    .whatsapp{position:fixed;bottom:20px;right:20px;background:#25d366;color:#fff;padding:14px 18px;border-radius:50px;font-weight:bold;text-decoration:none;box-shadow:0 0 20px rgba(37,211,102,.6);animation:pulse 1.5s infinite}
-    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.07)}100%{transform:scale(1)}}
-  </style>
-</head>
-<body>
-
-<header>
-  <h1>D-Connect 🛜</h1>
-  <p>Internet rápida, acessível e entregue via WhatsApp</p>
-</header>
-
-<div class="container">
-
-  <h2>📶 Planos Diários (24h)</h2>
-  <div class="grid" id="diarios"></div>
+index.html  <div class="grid" id="diarios"></div>
 
   <h2>🔵 Planos Semanais (7 dias)</h2>
   <div class="grid" id="semanais"></div>
