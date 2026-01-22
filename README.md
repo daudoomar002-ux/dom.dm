@@ -1,1 +1,121 @@
-mr.dm
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>D-Connect | Internet Rápida</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Segoe UI',sans-serif;background:#0e0e0e;color:#fff}
+    header{text-align:center;padding:30px 10px;background:#111;border-bottom:2px solid #ff6a00}
+    header h1{color:#ff6a00;margin-bottom:5px}
+    header p{font-size:14px;color:#ccc}
+    .container{max-width:1000px;margin:30px auto;padding:20px}
+    h2{color:#ff6a00;text-align:center;margin-top:40px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+    .card{background:#1a1a1a;border-radius:14px;padding:18px;text-align:center;border:1px solid #2a2a2a;transition:.3s;cursor:pointer}
+    .card:hover{transform:translateY(-6px);box-shadow:0 0 20px rgba(255,106,0,.25)}
+    .card span{display:block;font-size:18px;margin-bottom:6px}
+    .card strong{font-size:20px;color:#25d366}
+    .info{text-align:center;font-size:14px;color:#bbb;margin:15px 0}
+    .payments{max-width:500px;margin:30px auto}
+    .pay{background:#111;border:1px dashed #333;border-radius:10px;padding:14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+    .copy-btn{background:#25d366;border:none;color:#fff;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:bold}
+    .copy-btn:hover{background:#1ebf57}
+    footer{text-align:center;font-size:13px;color:#888;margin:40px 0}
+    .whatsapp{position:fixed;bottom:20px;right:20px;background:#25d366;color:#fff;padding:14px 18px;border-radius:50px;font-weight:bold;text-decoration:none;box-shadow:0 0 20px rgba(37,211,102,.6);animation:pulse 1.5s infinite}
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.07)}100%{transform:scale(1)}}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>D-Connect 🛜</h1>
+  <p>Internet rápida, acessível e entregue via WhatsApp</p>
+</header>
+
+<div class="container">
+
+  <h2>📶 Planos Diários (24h)</h2>
+  <div class="grid" id="diarios"></div>
+
+  <h2>🔵 Planos Semanais (7 dias)</h2>
+  <div class="grid" id="semanais"></div>
+
+  <h2>🔴 Planos Mensais (30 dias)</h2>
+  <div class="grid" id="mensais"></div>
+
+  <div class="payments">
+    <h2>💳 Formas de Pagamento</h2>
+    <div class="pay">M‑Pesa: <b id="mpesa">850714233</b> <button class="copy-btn" onclick="copyText('850714233')">Copiar</button></div>
+    <div class="pay">E‑Mola: <b id="emola">861731475</b> <button class="copy-btn" onclick="copyText('861731475')">Copiar</button></div>
+    <p class="info">Envie o comprovativo + número</p>
+  </div>
+
+</div>
+
+<a class="whatsapp" href="https://wa.me/258850714233?text=Posso%20comprar%20megas%3F" target="_blank">
+  <i class="fab fa-whatsapp"></i> Comprar
+</a>
+
+<footer>
+  Criado por Daúdo OmarJr • D‑Connect © 2025
+</footer>
+
+<script>
+  const diarios = [
+    ['512MB','10MT'],['1GB','16MT'],['2GB','32MT'],['3GB','48MT'],['4GB','64MT'],['5GB','80MT'],['6GB','96MT'],['7GB','112MT'],['8GB','128MT'],['9GB','144MT'],['10GB','160MT']
+  ];
+  const semanais = [
+    ['1.5GB','60MT'],['2.5GB','110MT'],['4.5GB','160MT'],['6.8GB','215MT'],['10GB','320MT']
+  ];
+  const mensais = [
+    ['10GB','270MT'],['18GB','398MT'],['28GB','526MT'],['30GB','654MT']
+  ];
+
+  function render(list, id){
+    const el = document.getElementById(id);
+    list.forEach(p=>{
+      const d = document.createElement('div');
+      d.className='card';
+      d.innerHTML = `<span>${p[0]}</span><strong>${p[1]}</strong>`;
+      d.onclick = ()=>{
+        if(confirm(`Deseja comprar ${p[0]} por ${p[1]}?`)){
+          window.open('https://wa.me/258850714233?text=Posso%20comprar%20megas%3F','_blank');
+        }
+      };
+      el.appendChild(d);
+    });
+  }
+
+  render(diarios,'diarios');
+  render(semanais,'semanais');
+  render(mensais,'mensais');
+
+  function copyText(text){
+    // Clipboard API pode ser bloqueada em ambientes sandbox
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(text).catch(()=>fallbackCopy(text));
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
+  function fallbackCopy(text){
+    const temp = document.createElement('textarea');
+    temp.value = text;
+    document.body.appendChild(temp);
+    temp.select();
+    try{
+      document.execCommand('copy');
+      alert('Copiado: ' + text);
+    }catch(e){
+      alert('Copie manualmente: ' + text);
+    }
+    document.body.removeChild(temp);
+  }
+</script>
+
+</body>
+</html>
