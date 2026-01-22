@@ -1,121 +1,475 @@
-    <!DOCTYPE html>
+<!doctype html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="D-Connect — Internet rápida, acessível e entrega via WhatsApp. Planos diários, semanais e mensais. Pagamentos via M-Pesa e E-Mola." />
+  <meta name="author" content="Daúdo OmarJr" />
   <title>D-Connect | Internet Rápida</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Favicon (SVG data URI) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23ff6a00'/%3E%3Ctext x='50' y='58' font-size='44' text-anchor='middle' font-family='Segoe UI, system-ui, -apple-system' fill='white'%3ED%3C/text%3E%3C/svg%3E" />
+
+  <!-- Font Awesome (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <style>
+    :root{
+      --bg:#0e0e0e;
+      --card:#1a1a1a;
+      --accent:#ff6a00;
+      --muted:#ccc;
+      --success:#25d366;
+      --glass: rgba(255,255,255,0.03);
+      --radius:12px;
+      --max-width:920px;
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:'Segoe UI',sans-serif;background:#0e0e0e;color:#fff}
-    header{text-align:center;padding:30px 10px;background:#111;border-bottom:2px solid #ff6a00}
-    header h1{color:#ff6a00;margin-bottom:5px}
-    header p{font-size:14px;color:#ccc}
-    .container{max-width:1000px;margin:30px auto;padding:20px}
-    h2{color:#ff6a00;text-align:center;margin-top:40px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
-    .card{background:#1a1a1a;border-radius:14px;padding:18px;text-align:center;border:1px solid #2a2a2a;transition:.3s;cursor:pointer}
-    .card:hover{transform:translateY(-6px);box-shadow:0 0 20px rgba(255,106,0,.25)}
-    .card span{display:block;font-size:18px;margin-bottom:6px}
-    .card strong{font-size:20px;color:#25d366}
-    .info{text-align:center;font-size:14px;color:#bbb;margin:15px 0}
-    .payments{max-width:500px;margin:30px auto}
-    .pay{background:#111;border:1px dashed #333;border-radius:10px;padding:14px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-    .copy-btn{background:#25d366;border:none;color:#fff;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:bold}
-    .copy-btn:hover{background:#1ebf57}
-    footer{text-align:center;font-size:13px;color:#888;margin:40px 0}
-    .whatsapp{position:fixed;bottom:20px;right:20px;background:#25d366;color:#fff;padding:14px 18px;border-radius:50px;font-weight:bold;text-decoration:none;box-shadow:0 0 20px rgba(37,211,102,.6);animation:pulse 1.5s infinite}
-    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.07)}100%{transform:scale(1)}}
+    body{
+      margin:0;
+      font-family:"Segoe UI",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,var(--bg),#080808);
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:24px;
+      display:flex;
+      justify-content:center;
+      min-height:100vh;
+      align-items:flex-start;
+    }
+
+    .site{
+      width:100%;
+      max-width:var(--max-width);
+      margin:20px auto;
+    }
+
+    header{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:18px 20px;
+      display:flex;
+      gap:16px;
+      align-items:center;
+      border:1px solid rgba(255,255,255,0.04);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex:1;
+    }
+    .logo{
+      width:64px;
+      height:64px;
+      border-radius:12px;
+      background:var(--accent);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      color:#fff;
+      font-size:28px;
+      flex-shrink:0;
+    }
+    header h1{ margin:0; color:var(--accent); font-size:20px }
+    header p{ margin:0; color:var(--muted); font-size:13px }
+
+    .contact{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .contact a{
+      color:#fff;
+      text-decoration:none;
+      background:var(--glass);
+      padding:8px 10px;
+      border-radius:8px;
+      font-size:14px;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .contact a i{ color:var(--accent) }
+
+    main{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: 1fr 320px;
+      gap:18px;
+    }
+
+    /* Left: planos */
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:18px;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .card h2{ color:var(--accent); margin:0 0 8px 0; font-size:18px }
+    .tabela{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+      margin-top:14px;
+    }
+    .plano{
+      background:#262626;
+      padding:14px;
+      border-radius:10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      cursor:pointer;
+      transition:all .14s ease;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .plano:hover{ transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,0.6) }
+    .plano .left{ text-align:left }
+    .plano .left .size{ font-weight:700; font-size:16px }
+    .plano .left .note{ font-size:12px; color:var(--muted) }
+    .plano .price{ font-size:16px; color:var(--success); font-weight:800 }
+
+    /* Sidebar: pagamentos + ações */
+    .sidebar .section{ margin-bottom:14px }
+    .pay-list{ display:flex; flex-direction:column; gap:10px }
+    .pay-item{
+      background:#262626;
+      padding:12px;
+      border-radius:10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .pay-item .label{ font-size:14px }
+    .pay-item button{
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      padding:8px 10px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .cta{
+      display:flex;
+      gap:8px;
+      margin-top:8px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      background:var(--success);
+      color:#041;
+      font-weight:800;
+      padding:12px 14px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      text-decoration:none;
+    }
+    .btn.secondary{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--muted);
+      font-weight:600;
+    }
+
+    footer{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+    }
+
+    /* toast */
+    .toast{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      background:#0b0b0b;
+      color:#fff;
+      border:1px solid rgba(255,255,255,0.04);
+      padding:10px 14px;
+      border-radius:10px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.6);
+      opacity:0;
+      transform:translateY(8px);
+      transition:all .24s ease;
+      z-index:9999;
+    }
+    .toast.show{ opacity:1; transform:translateY(0) }
+
+    /* responsive */
+    @media (max-width:880px){
+      main{ grid-template-columns:1fr; }
+      .tabela{ grid-template-columns:repeat(2,1fr) }
+    }
+    @media (max-width:480px){
+      .tabela{ grid-template-columns:repeat(1,1fr) }
+      header{ flex-direction:column; align-items:flex-start; gap:12px }
+    }
   </style>
 </head>
 <body>
+  <div class="site">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">D</div>
+        <div>
+          <h1>D-Connect 🛜</h1>
+          <p>Internet rápida, acessível e entregue via WhatsApp</p>
+        </div>
+      </div>
 
-<header>
-  <h1>D-Connect 🛜</h1>
-  <p>Internet rápida, acessível e entregue via WhatsApp</p>
-</header>
+      <div class="contact" role="navigation" aria-label="Contactos">
+        <a href="mailto:daudoomar002@gmail.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-envelope"></i> Email</a>
+        <a href="tel:+258850714233" target="_blank" rel="noopener noreferrer"><i class="fas fa-phone"></i> Ligar</a>
+        <a href="https://wa.me/258850714233" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </header>
 
-<div class="container">
+    <main>
+      <section class="card" aria-labelledby="planos-title">
+        <h2 id="planos-title">📶 Planos Diários</h2>
 
-  <h2>📶 Planos Diários (24h)</h2>
-  <div class="grid" id="diarios"></div>
+        <div class="tabela" id="plan-grid">
+          <!-- Plan items (data-plan, data-price) -->
+          <div class="plano" data-plan="512MB" data-price="10MT" tabindex="0" role="button" aria-pressed="false">
+            <div class="left"><div class="size">512MB</div><div class="note">Válido 24h</div></div>
+            <div class="price">10MT</div>
+          </div>
 
-  <h2>🔵 Planos Semanais (7 dias)</h2>
-  <div class="grid" id="semanais"></div>
+          <div class="plano" data-plan="1GB" data-price="16MT" tabindex="0" role="button" aria-pressed="false">
+            <div class="left"><div class="size">1GB</div><div class="note">Válido 24h</div></div>
+            <div class="price">16MT</div>
+          </div>
 
-  <h2>🔴 Planos Mensais (30 dias)</h2>
-  <div class="grid" id="mensais"></div>
+          <div class="plano" data-plan="2GB" data-price="32MT" tabindex="0" role="button" aria-pressed="false">
+            <div class="left"><div class="size">2GB</div><div class="note">Válido 24h</div></div>
+            <div class="price">32MT</div>
+          </div>
 
-  <div class="payments">
-    <h2>💳 Formas de Pagamento</h2>
-    <div class="pay">M‑Pesa: <b id="mpesa">850714233</b> <button class="copy-btn" onclick="copyText('850714233')">Copiar</button></div>
-    <div class="pay">E‑Mola: <b id="emola">861731475</b> <button class="copy-btn" onclick="copyText('861731475')">Copiar</button></div>
-    <p class="info">Envie o comprovativo + número</p>
+          <div class="plano" data-plan="3GB" data-price="48MT" tabindex="0" role="button" aria-pressed="false">
+            <div class="left"><div class="size">3GB</div><div class="note">Válido 24h</div></div>
+            <div class="price">48MT</div>
+          </div>
+
+          <div class="plano" data-plan="4GB" data-price="64MT" tabindex="0" role="button" aria-pressed="false">
+            <div class="left"><div class="size">4GB</div><div class="note">Válido 24h</div></div>
+            <div class="price">64MT</div>
+          </div>
+
+          <div class="plano" data-plan="5GB" data-price="80MT" tabindex="0" role="button" aria-pressed="false">
+            <div class="left"><div class="size">5GB</div><div class="note">Válido 24h</div></div>
+            <div class="price">80MT</div>
+          </div>
+
+          <div class="plano" data-plan="6GB" data-price="96MT" tabindex="0" role="button" aria-pressed="false">
+            <div class="left"><div class="size">6GB</div><div class="note">Válido 24h</div></div>
+            <div class="price">96MT</div>
+          </div>
+
+          <div class="plano" data-plan="10GB" data-price="160MT" tabindex="0" role="button" aria-pressed="false">
+            <div class="left"><div class="size">10GB</div><div class="note">Válido 24h</div></div>
+            <div class="price">160MT</div>
+          </div>
+        </div>
+
+        <p style="margin-top:16px; color:var(--muted); font-size:13px;">
+          📅 Cada plano é válido por 24h após ativação. Clique num plano para comprar — será aberta uma mensagem no WhatsApp pronta para enviar.
+        </p>
+      </section>
+
+      <aside class="sidebar">
+        <div class="card section" aria-labelledby="pagamentos">
+          <h3 id="pagamentos" style="margin:0 0 12px 0; color:var(--accent)">💳 Formas de Pagamento</h3>
+
+          <div class="pay-list">
+            <div class="pay-item" title="Clique para copiar">
+              <div>
+                <div class="label">M-Pesa</div>
+                <div style="font-size:13px; color:var(--muted)">850714233 — Hiracema</div>
+              </div>
+              <div>
+                <button class="copy-btn" data-copy="M-Pesa • 850714233 • Hiracema">Copiar</button>
+              </div>
+            </div>
+
+            <div class="pay-item" title="Clique para copiar">
+              <div>
+                <div class="label">E-Mola</div>
+                <div style="font-size:13px; color:var(--muted)">861731475 — Valentim</div>
+              </div>
+              <div>
+                <button class="copy-btn" data-copy="E-Mola • 861731475 • Valentim">Copiar</button>
+              </div>
+            </div>
+
+            <div class="pay-item" title="Clique para copiar">
+              <div>
+                <div class="label">Contacto (WhatsApp)</div>
+                <div style="font-size:13px; color:var(--muted)">+258 850 714 233</div>
+              </div>
+              <div>
+                <button class="copy-btn" data-copy="+258850714233">Copiar</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px; color:var(--muted); font-size:13px;">
+            Após pagamento, envia o comprovativo + número para entrega rápida via WhatsApp.
+          </div>
+
+          <div class="cta" style="margin-top:14px">
+            <a href="https://wa.me/258850714233?text=Olá,%20quero%20saber%20mais%20sobre%20os%20planos%20D-Connect" class="btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a>
+
+            <a class="btn secondary" href="mailto:daudoomar002@gmail.com" target="_blank" rel="noopener noreferrer"><i class="fas fa-envelope"></i> Enviar Email</a>
+          </div>
+        </div>
+
+        <div class="card section">
+          <h3 style="margin:0 0 10px 0; color:var(--accent)">ℹ️ Informação</h3>
+          <p style="color:var(--muted); font-size:13px; margin:0 0 8px 0;">
+            Entregas automáticas via WhatsApp. Se precisares enviar um número de telefone de outro país, coloca o prefixo internacional.
+          </p>
+
+          <div style="font-size:13px; color:var(--muted)">
+            Criado por Daúdo OmarJr • D-Connect © 2025
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <small>Designed for GitHub Pages — coloca este ficheiro como <code>index.html</code> na raiz do repositório.</small>
+    </footer>
   </div>
 
-</div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-<a class="whatsapp" href="https://wa.me/258850714233?text=Posso%20comprar%20megas%3F" target="_blank">
-  <i class="fab fa-whatsapp"></i> Comprar
-</a>
+  <script>
+    // Helpers
+    const WA_NUMBER = "258850714233";
+    const toastEl = document.getElementById('toast');
 
-<footer>
-  Criado por Daúdo OmarJr • D‑Connect © 2025
-</footer>
+    function showToast(msg, duration = 2200){
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(()=> {
+        toastEl.classList.remove('show');
+      }, duration);
+    }
 
-<script>
-  const diarios = [
-    ['512MB','10MT'],['1GB','16MT'],['2GB','32MT'],['3GB','48MT'],['4GB','64MT'],['5GB','80MT'],['6GB','96MT'],['7GB','112MT'],['8GB','128MT'],['9GB','144MT'],['10GB','160MT']
-  ];
-  const semanais = [
-    ['1.5GB','60MT'],['2.5GB','110MT'],['4.5GB','160MT'],['6.8GB','215MT'],['10GB','320MT']
-  ];
-  const mensais = [
-    ['10GB','270MT'],['18GB','398MT'],['28GB','526MT'],['30GB','654MT']
-  ];
-
-  function render(list, id){
-    const el = document.getElementById(id);
-    list.forEach(p=>{
-      const d = document.createElement('div');
-      d.className='card';
-      d.innerHTML = `<span>${p[0]}</span><strong>${p[1]}</strong>`;
-      d.onclick = ()=>{
-        if(confirm(`Deseja comprar ${p[0]} por ${p[1]}?`)){
-          window.open('https://wa.me/258850714233?text=Posso%20comprar%20megas%3F','_blank');
+    // Copy buttons
+    document.querySelectorAll('.copy-btn').forEach(btn=>{
+      btn.addEventListener('click', async (e)=>{
+        const text = btn.dataset.copy || '';
+        try{
+          await navigator.clipboard.writeText(text);
+          showToast('Copiado: ' + text);
+        }catch(err){
+          // fallback
+          const inp = document.createElement('input');
+          document.body.appendChild(inp);
+          inp.value = text;
+          inp.select();
+          try{ document.execCommand('copy'); showToast('Copiado: ' + text); }catch(e){ alert('Copia manual: ' + text) }
+          inp.remove();
         }
-      };
-      el.appendChild(d);
+      });
     });
-  }
 
-  render(diarios,'diarios');
-  render(semanais,'semanais');
-  render(mensais,'mensais');
-
-  function copyText(text){
-    // Clipboard API pode ser bloqueada em ambientes sandbox
-    if(navigator.clipboard && window.isSecureContext){
-      navigator.clipboard.writeText(text).catch(()=>fallbackCopy(text));
-    } else {
-      fallbackCopy(text);
+    // Plan click -> confirm -> open WhatsApp with prefilled message
+    function openWhatsAppWithMessage(msg){
+      const encoded = encodeURIComponent(msg);
+      const url = `https://wa.me/${WA_NUMBER}?text=${encoded}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
     }
-  }
 
-  function fallbackCopy(text){
-    const temp = document.createElement('textarea');
-    temp.value = text;
-    document.body.appendChild(temp);
-    temp.select();
-    try{
-      document.execCommand('copy');
-      alert('Copiado: ' + text);
-    }catch(e){
-      alert('Copie manualmente: ' + text);
-    }
-    document.body.removeChild(temp);
-  }
-</script>
+    document.querySelectorAll('.plano').forEach(item=>{
+      item.addEventListener('click', ()=>{
+        const plan = item.dataset.plan;
+        const price = item.dataset.price;
+        // Ask for optional client number to include
+        const want = confirm(`Desejas comprar ${plan} por ${price} agora?`);
+        if(!want) return;
+        const cliente = prompt('Insere o teu número (opcional) — ex: 82xxxxxxx', '');
+        let msg = `Olá, quero comprar ${plan} — ${price}.`;
+        if(cliente && cliente.trim()) msg += ` Número do cliente: ${cliente.trim()}.`;
+        msg += ' Obrigado!';
+        openWhatsAppWithMessage(msg);
+      });
 
+      // keyboard accessibility
+      item.addEventListener('keydown', (ev)=>{
+        if(ev.key === 'Enter' || ev.key === ' '){
+          ev.preventDefault();
+          item.click();
+        }
+      });
+    });
+
+    // Accessibility: focus outline when keyboard navigation
+    document.body.addEventListener('keydown', (e)=>{
+      if(e.key === 'Tab') document.body.classList.add('show-focus');
+    });
+  </script>
 </body>
 </html>
+````markdown name=README.md
+```markdown
+# D-Connect — Site para GitHub Pages
+
+Este repositório contém um ficheiro `index.html` pronto para publicar no GitHub Pages. O site permite:
+
+- Selecionar planos (diários) — ao clicar no plano aparece uma confirmação e, se aceitares, abre o WhatsApp com uma mensagem pré-preenchida.
+- Copiar rapidamente os dados de pagamento (M-Pesa, E-Mola, contacto) com um botão "Copiar".
+- Links diretos: `mailto:`, `tel:`, `https://wa.me/` com texto.
+- Layout responsivo e optimizado para mobile-first.
+- Favicon embutido (data URI) — sem ficheiros adicionais.
+
+## Como publicar (GitHub Pages)
+
+1. Cria um repositório (ex: `daudo-omarjr`).
+2. Coloca o ficheiro `index.html` na raiz do repositório (branch `main`).
+3. Vai a **Settings → Pages**.
+4. Em **Source**, escolhe: Branch: `main` / Folder: `/ (root)` e salva.
+5. Em segundos o site ficará público no domínio `https://<username>.github.io/<repo>` ou no domínio do utilizador se publicado na repo com esse nome.
+
+## Como funciona (uso rápido)
+
+- Clica num plano (ex. `1GB — 16MT`) → confirma → abre WhatsApp com mensagem do tipo:
+  `Olá, quero comprar 1GB — 16MT. Número do cliente: 82xxxxxxx. Obrigado!`
+- Clica em "Copiar" junto à forma de pagamento para copiar o número e o nome do destinatário para o clipboard.
+- Também podes clicar em "Falar no WhatsApp" no topo para uma conversa geral.
+
+## Personalização rápida
+
+- Muda o número principal definindo `WA_NUMBER` dentro do `<script>` (linha no topo do script).
+- Adiciona/editar planos no DOM: cada `.plano` tem `data-plan` e `data-price`.
+- Ajusta formas de pagamento na secção `.pay-list`.
+
+## Perguntas frequentes
+
+- "Com uma mensagem posso comprar megas?"
+  - Sim. Ao clicar num plano e confirmar, é aberta uma conversa no WhatsApp com uma mensagem já preenchida — basta enviar essa mensagem para efetivar a compra/iniciar o processo de entrega.
+- "Os botões de pagamento fazem transferência automática?"
+  - Não. Eles apenas copiam os dados (número e nome) para facilitar o pagamento no teu app de pagamentos. Depois de pagar, envia o comprovativo via WhatsApp.
+
+Se quiseres, eu posso:
+- Criar um README mais comercial e imagens.
+- Adicionar planos semanais/mensais predefinidos (já inclui apenas os diários — posso acrescentar todos).
+- Gerar um pequeno modal de checkout com seleção de quantidade e confirmação mais rica (em vez do confirm+prompt).
+- Publicar diretamente no teu repositório (se me forneceres o owner/nome do repo ou permissões).
+
+---
+Feito por Daúdo OmarJr • D-Connect
